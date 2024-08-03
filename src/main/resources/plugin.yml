@@ -1,0 +1,7 @@
+name: BedrockOffhand
+version: '${project.version}'
+main: me.zombieman.dev.bedrockoffhand.BedrockOffhand
+api-version: '1.13'
+commands:
+  offhand:
+  offhandadmin:
