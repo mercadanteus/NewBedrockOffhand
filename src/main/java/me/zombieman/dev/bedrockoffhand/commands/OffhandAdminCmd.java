@@ -1,6 +1,8 @@
 package me.zombieman.dev.bedrockoffhand.commands;
 
 import me.zombieman.dev.bedrockoffhand.BedrockOffhand;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -35,6 +37,24 @@ public class OffhandAdminCmd implements CommandExecutor, TabCompleter {
         if (!player.hasPermission("bedrockoffhand.command.offhandadmin")) {
             player.sendMessage(MiniMessage.miniMessage().deserialize("<#FF0000>You don't have permission to run this command!"));
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+            return false;
+        }
+
+        if (args[0].equalsIgnoreCase("support") || args[0].equalsIgnoreCase("help")) {
+            player.sendMessage(MiniMessage.miniMessage().deserialize("""
+                            <#7289da><strikethrough>                                            </strikethrough>
+                            <#7289da><bold>Click Here To Get Support!</bold>
+                            <#7289da><strikethrough>                                            </strikethrough>""")
+                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/SuypvRBa4c"))
+                    .hoverEvent(HoverEvent.showText(MiniMessage.miniMessage().deserialize("<#7289da>Click Here To Get Support!"))));
+            return false;
+        } else if (args[0].equalsIgnoreCase("suggestion")) {
+            player.sendMessage(MiniMessage.miniMessage().deserialize("""
+                            <#7289da><strikethrough>                                            </strikethrough>
+                            <#7289da><bold>Click Here To Suggest Something!</bold>
+                            <#7289da><strikethrough>                                            </strikethrough>""")
+                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/SuypvRBa4c"))
+                    .hoverEvent(HoverEvent.showText(MiniMessage.miniMessage().deserialize("<#7289da>Click Here To Suggest Something!"))));
             return false;
         }
 
@@ -86,6 +106,7 @@ public class OffhandAdminCmd implements CommandExecutor, TabCompleter {
             if (player.hasPermission("bedrockoffhand.command.offhandadmin")) {
                 if (args.length == 1) {
                     completions.add("setConfig");
+                    completions.add("support");
                 } else if (args.length == 2) {
                     completions.add("showMessages");
                     completions.add("playSounds");
