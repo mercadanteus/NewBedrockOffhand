@@ -32,9 +32,12 @@ public class OffhandManager {
         return input.replaceAll("(?i)§[0-9a-fklmnoprs]", "");
     }
 
-    public static void switchOffhand(BedrockOffhand plugin, Player player) {
-        ItemStack offhandItem = getOffhand(player);
-        ItemStack itemToSwitch = player.getInventory().getItemInMainHand();
+public static void switchOffhand(BedrockOffhand plugin, Player player) {
+        ItemStack rawOffhand = getOffhand(player);
+        ItemStack offhandItem = (rawOffhand != null) ? rawOffhand.clone() : new ItemStack(Material.AIR);
+
+        ItemStack rawMain = player.getInventory().getItemInMainHand();
+        ItemStack itemToSwitch = (rawMain != null) ? rawMain.clone() : new ItemStack(Material.AIR);
 
         if (itemToSwitch.getType() == Material.AIR && !hasOffhand(player)) {
             if (plugin.getConfig().getBoolean("showMessages")) player.sendMessage(MiniMessage.miniMessage().deserialize("<#FF0000>You don't have any items to switch."));
@@ -52,6 +55,7 @@ public class OffhandManager {
             if (plugin.getConfig().getBoolean("playSounds")) player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f);
             player.getInventory().setItemInOffHand(null);
             player.getInventory().setItemInMainHand(offhandItem);
+            player.updateInventory();
             return;
         }
 
@@ -64,6 +68,7 @@ public class OffhandManager {
             if (plugin.getConfig().getBoolean("playSounds")) player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f);
             player.getInventory().setItemInMainHand(null);
             player.getInventory().setItemInOffHand(itemToSwitch);
+            player.updateInventory();
             return;
         }
 
@@ -81,6 +86,7 @@ public class OffhandManager {
 
             player.getInventory().setItemInOffHand(itemToSwitch);
             player.getInventory().setItemInMainHand(offhandItem);
+            player.updateInventory();
             return;
         }
     }
