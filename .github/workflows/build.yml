@@ -1,0 +1,24 @@
+name: Compilar Plugin
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Configurar Java 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    - name: Compilar con Maven
+      run: mvn clean package
+    - name: Subir archivo JAR
+      uses: actions/upload-artifact@v4
+      with:
+        name: BedrockOffhand-CastleHill
+        path: target/*.jar
