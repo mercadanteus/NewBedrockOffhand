@@ -1,7 +1,9 @@
 name: BedrockOffhand
 version: '${project.version}'
 main: me.zombieman.dev.bedrockoffhand.BedrockOffhand
-api-version: '1.13'
+api-version: '1.21'
+authors: [mercadanteus, zombieman33]
+description: Fork optimizado para compatibilidad de items con EliteMobs.
 commands:
   offhand:
   offhandadmin:
